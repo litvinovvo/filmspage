@@ -1,0 +1,375 @@
+.page{
+    font-family: 'Roboto', sans-serif;
+    background-color: whitesmoke;
+}
+.page__bg_white{
+    background-color: white;
+    min-height: calc(100vh - 155px);
+}
+.input{
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-right-width: 0;
+    border-left-width: 0;
+}
+
+.link{
+    color: #FA320A;
+}
+.link:hover{
+    text-decoration: underline;
+    color: #000;
+}
+.link:active,
+.link:focus{
+    text-decoration: none;
+    color: #000;
+}
+
+.link_inv{
+    color: #fff;
+}
+.link_inv:hover{
+    text-decoration: none;
+    color: #000;
+}
+.link_inv:active,
+.link_inv:focus{
+    text-decoration: none;
+    color: #fff;
+}
+
+.header{
+    background-color: #FA320A;
+    color: #fff;
+}
+
+.row_no-padding [class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.container_no-padding{
+    padding-left: 0;
+    padding-right: 0;
+    overflow-x: hidden;    
+}
+
+.zero-font{
+    font-size: 0;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.top-nav{
+    list-style-type: none;
+    margin: 0;  
+    padding-left: 0;
+}
+
+.top-nav .top-nav__item:last-child{
+    margin-right: 0;
+}
+
+.top-nav__item{
+    display: inline;
+    margin-right: 60px;
+}
+
+.top-nav__link{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    
+}
+
+.top-nav__link_active{
+    color: #000;
+    border-bottom: 3px solid black;
+}
+.top-nav__link_active:active,
+.top-nav__link_active:focus{
+    color: black;
+}
+
+.header__inner{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.zero-font{
+    font-size: 0;
+}
+
+.header__logo{
+    text-align: center;
+}
+.logo{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    margin: 0;
+}
+
+.logo__link{
+    color: #fff;
+}
+.logo__link:hover{
+    text-decoration: none;
+    color: #000;
+}
+.logo__link:active,
+.logo__link:focus{
+    text-decoration: none;
+    color: #fff;
+}
+
+.top-search__input{
+    display: block;
+    font-size: 16px;
+    width: 100%;
+    padding: 5px 40px 5px 10px;
+    border-radius: 5px;
+    color: #000;
+}
+
+.top-search__input::placeholder { 
+    color: rgb(165, 165, 165);
+    opacity: 1;
+}
+
+.top-search__input:-ms-input-placeholder { 
+    color: rgb(165, 165, 165);
+}
+
+.top-search__input::-ms-input-placeholder { 
+    color: rgb(165, 165, 165);
+}
+
+.top-search__btn{
+    font-size: 18px;
+    color: grey;
+    position: absolute;
+    top: 6px;
+    right: 26px;
+}
+
+.top-search__btn:hover{
+    color: black;
+    cursor: pointer;
+}
+
+.top-search__btn:active,
+.top-search__btn:focus{
+    color: grey;
+}
+
+.film-pre{
+    height: 450px;
+
+
+}
+.film-pre__background{
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(100%);
+    height: 100%;
+    opacity: .8;
+    transition: all .15s ease-in-out;
+}
+
+.film-pre__content{
+    position: absolute;
+    bottom: 15%;
+    width: 90%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, .7);
+    border-left: 5px solid #FA320A;
+    transition: all .15s ease-in-out; 
+}
+.film-pre__title{
+
+    color: black;
+    
+    font-size: 24px;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
+    
+}
+
+.film-pre__subtitle{
+    font-size: 16px;
+    color: #343434;
+
+}
+
+.film-pre_selected .film-pre__background{
+    filter: grayscale(0);
+    opacity: 1;    
+}
+.film-pre_selected .film-pre__content{
+    background-color: rgba(255, 255, 255, .95);  
+}
+.film-pre:hover{
+    cursor: pointer;
+}
+
+.film-pre:hover .film-pre__background{
+    filter: grayscale(0);
+    opacity: 1;
+}
+
+.film-pre:hover .film-pre__content{
+    background-color: rgba(255, 255, 255, .95);
+}
+
+.new-review{
+    color: #343434;
+}
+
+.new-review__label{
+    font-size: 18px;
+    margin-bottom: 5px;
+    display: block;
+    font-family: 'Roboto Condensed', sans-serif;   
+}
+.new-review__input{
+    display: block;
+    width: 100%;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 2px solid #dedede;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+.new-review__textarea{
+    display: block;
+    width: 100%;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 2px solid #dedede; 
+    font-size: 16px; 
+}
+.new-review__btn{
+    display: block;
+    padding: 10px 20px;
+    /* font-family: 'Roboto Condensed', sans-serif;  */
+    font-size: 18px;
+    color: white;
+    background-color: #FA320A;
+    border-width: 0;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.new-review__btn:hover{
+    background-color: rgb(233, 49, 13);
+}
+
+.new-review__btn:focus,
+.new-review__btn:active{
+    outline: none;
+    background-color: #FA320A;
+}
+
+.film__header,
+.film__title{
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.review__title{
+    font-family: 'Roboto Condensed', sans-serif;
+    margin-top: 5px;
+}
+.review__author{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 16px;
+    color: #888888;
+}
+
+.film__all-reviews{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    float: right;
+}
+
+.film__new-review{
+    padding: 10px 0 40px 0;
+}
+
+
+.film-filter__title{
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
+}
+
+.film-filter__list{
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.film-filter__item{
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.film-filter__link{
+    font-size: 16px;
+    
+    font-weight: 700;
+    line-height: 2.5;
+    color: black;
+    text-transform: uppercase;
+    padding-left: 10px;
+    border-left: 5px solid #fff;
+
+}
+
+.film-filter__link_active{
+    color: #FA320A;
+    border-left: 5px solid #FA320A;
+    padding-left: 10px;
+}
+
+.film-filter__link:hover{
+    color: #FA320A;
+    text-decoration: none;
+}
+
+.film-filter__link:active,
+.film-filter__link:focus{
+    text-decoration: none;
+    color: #FA320A;
+}
+
+.footer{
+    background-color: #131313;
+    color: white;
+    padding: 25px;
+    text-align: center;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 16px;
+}
+
+.page__film-filter,
+.page__content{
+    padding-bottom: 30px;
+}
+
+@media (max-width: 992px){
+    .col-xs-12{
+        margin-bottom: 20px;
+    }
+    .top-nav__item {
+        margin-right: 30px;
+    }
+}
