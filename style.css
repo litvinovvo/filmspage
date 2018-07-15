@@ -329,7 +329,7 @@
     line-height: 2.5;
     color: black;
     text-transform: uppercase;
-    padding-left: 10px;
+    padding: 5px 10px;
     border-left: 5px solid #fff;
 
 }
@@ -337,7 +337,6 @@
 .film-filter__link_active{
     color: #FA320A;
     border-left: 5px solid #FA320A;
-    padding-left: 10px;
 }
 
 .film-filter__link:hover{
