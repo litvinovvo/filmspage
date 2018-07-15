@@ -4,7 +4,7 @@
 }
 .page__bg_white{
     background-color: white;
-    min-height: calc(100vh - 155px);
+    min-height: calc(100vh - 135px);
 }
 .input{
     border-top-width: 0;
