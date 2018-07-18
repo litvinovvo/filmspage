@@ -6,11 +6,12 @@ function insertAfter(elem, refElem) {
 escapeForHTML = s => s.replace(/[&<]/g, c => c === '&' ? '&amp;' : '&lt;');
 
 class Comment {
-    constructor({author,text,film_id,title}){
+    constructor({author,text,film_id,title,rate}){
         this.author = escapeForHTML(author)
         this.text = text ? escapeForHTML(text):'Автор не оставил подробной рецензии'
         this.title = escapeForHTML(title)
         this.film_id = film_id
+        this.rate = rate
         this.id = Comment.generateId()
     }
     static generateId(){
@@ -26,7 +27,7 @@ class App {
         
         this.activeTagId = null
         this.activeFilmId = null
-
+        this.activeTrailerId = null
         this.watchEvents()
     }
 
@@ -36,24 +37,82 @@ class App {
         filterEl.addEventListener('click',(e) => this.clickOnTag(e))
         filmsEl.addEventListener('click',(e) => this.clickOnFilm(e))
         filmsEl.addEventListener('submit',(e) => this.submitForm(e))
+        filmsEl.addEventListener('click',(e) => this.clickOnPlay(e))
+        filmsEl.addEventListener('click',(e) => this.clickOnPause(e))
     }
 
     submitForm(e){
         e.preventDefault()
+        
         const target = e.target
+        console.log(target.rate.value)
         this.comments.push(new Comment({
             author: target.name.value,
             text: target.text.value,
             title: target.title.value,
-            film_id: target.film.value
+            film_id: target.film.value,
+            rate: target.rate.value
         }))
         this.renderFilmArticle(this.activeFilmId)
     }
-
-    clickOnFilm(e){
-        const filmsEl = document.querySelector('.film__list')
+    clickOnPause(e){
+        const filmPrePause = e.target.closest(".film-pre__pause")
+        
+        if(!filmPrePause)return
         const filmPreEl = e.target.closest("[data-id]")
         
+        if(!filmPreEl || !filmPreEl.dataset || !filmPreEl.dataset.id)return
+        this.pauseTrailer(filmPreEl.dataset.id)
+    }
+    
+    pauseTrailer(id){
+        const filmsEl = document.querySelector('.film__list')
+        const filmPreEl = filmsEl.querySelector(`[data-id="${id}"]`)
+        
+        if(!filmPreEl || !filmPreEl.dataset || !filmPreEl.dataset.id)return
+        const filmPreContent = filmPreEl.querySelector('.film-pre__content')
+        const filmPrePause = filmPreEl.querySelector(".film-pre__pause")
+        if(filmPreContent)filmPreContent.classList.remove('film-pre__content_hidden')
+        const videoPreEl = filmPreEl.querySelector('video')
+        if(!videoPreEl)return
+        const filmPrePlay = filmPreEl.querySelector(".film-pre__play")
+        filmPreEl.classList.remove('film-pre_show-video')
+        filmPrePause.classList.toggle('hidden')
+        filmPrePlay.classList.toggle('hidden')
+        videoPreEl.pause()
+        this.activeTrailerId = null        
+    }
+    
+    clickOnPlay(e){
+        const filmPrePlay = e.target.closest(".film-pre__play")
+        
+        if(!filmPrePlay)return
+        const filmPreEl = e.target.closest("[data-id]")
+        
+        if(!filmPreEl || !filmPreEl.dataset || !filmPreEl.dataset.id)return
+        const filmPreContent = filmPreEl.querySelector('.film-pre__content')
+        if(filmPreContent)filmPreContent.classList.add('film-pre__content_hidden')
+        const videoPreEl = filmPreEl.querySelector('video')
+        if(!videoPreEl)return
+        const filmPrePause = filmPreEl.querySelector(".film-pre__pause")
+        filmPreEl.classList.add('film-pre_show-video')
+        filmPrePause.classList.toggle('hidden')
+        filmPrePlay.classList.toggle('hidden')
+        videoPreEl.classList.remove('hidden')
+        if(this.activeTrailerId)this.pauseTrailer(this.activeTrailerId)
+        videoPreEl.play()
+        this.activeTrailerId = filmPreEl.dataset.id
+    }
+
+
+    clickOnFilm(e){
+        const filmPrePlay = e.target.closest(".film-pre__play")
+        const filmPrePause = e.target.closest(".film-pre__pause")
+        if(filmPrePlay || filmPrePause)return
+
+        const filmsEl = document.querySelector('.film__list')
+        const filmPreEl = e.target.closest("[data-id]")
+
         const selectedEl = filmsEl.querySelector('.film-pre_selected')
 
         if(!filmPreEl || !filmPreEl.dataset || !filmPreEl.dataset.id)return
@@ -85,7 +144,16 @@ class App {
         filmArticleEl.classList.add("col-md-12", "film")
         const film = this.films.filter((f)=>f.id + '' === id + '')
         let commentsStr = '';
+        
         const comments = this.comments.filter((c) => c.film_id + '' === id + '')
+
+        function renderRate(rate){
+            let rateStr = '';
+            for(let r=1;r<6;r++){
+                rateStr+= rate < r ? `<i class="far fa-star"></i>` : `<i class="fas fa-star"></i>`
+            }
+            return rateStr
+        }
 
         for(let c of comments){
             commentsStr +=`
@@ -93,7 +161,7 @@ class App {
             <header>
                 <div class="review__author">${c.author}</div>
                 <h4 class="review__title">${c.title}</h4>
-                
+                <div class="review__rate">${renderRate(c.rate)}</div>
             </header>
                 <p>${c.text}</p>
             </article>
@@ -118,13 +186,44 @@ class App {
         <h3 class="film__header">Поделитесь своим мнением!</h3>
         <form action="#" method="POST">
                 <input id="film" name="film" type="hidden" value="${film[0].id}">
-                
+                <label class="new-review__label">Ваша оценка</label>
+                <div class="new-review__rate">
+                    <input class="hidden" type="radio" name="rate" id="rate1" value="1">
+                    <input class="hidden" type="radio" name="rate" id="rate2" value="2">
+                    <input class="hidden" type="radio" name="rate" id="rate3" checked value="3">
+                    <input class="hidden" type="radio" name="rate" id="rate4" value="4">
+                    <input class="hidden" type="radio" name="rate" id="rate5" value="5">
+
+                    <label for="rate1" class="star">  
+                        <i class="far fa-star"></i>
+                    </label>
+
+                    <label for="rate2" class="star">  
+                        <i class="far fa-star"></i>
+                    </label>
+                    
+                    <label for="rate3" class="star">  
+                        <i class="far fa-star"></i>
+                    </label>
+
+                    <label for="rate4" class="star">  
+                        <i class="far fa-star"></i>
+                    </label>
+                    
+                    <label for="rate5" class="star">  
+                        <i class="far fa-star"></i>
+                    </label>
+                </div>
+
+
                 <label class=" new-review__label" for="name">Имя</label>
-                <input required class="input new-review__input" type="text" name="name" id="name" placeholder="Ваше имя">
+                <input required autocomplete="off" class="input new-review__input" type="text" name="name" id="name" placeholder="Иван Иванов" minlength="2">
+                <span class="input-helper"></span>
                 <label class=" new-review__label" for="title">Заголовок</label>
-                <input required class="input new-review__input" type="text" name="title" id="title" placeholder="Коротко о фильме">                
+                <input required autocomplete="off" class="input new-review__input" type="text" name="title" id="title" placeholder="Коротко о фильме" minlength="2">               <span class="input-helper"></span> 
                 <label class=" new-review__label" for="text">Текст</label>
-                <textarea class="input new-review__textarea" name="text" id="text" placeholder="Ваша рецензия" ></textarea>
+                <textarea autocomplete="off" class="input new-review__textarea" name="text" id="text" placeholder="Ваша рецензия" ></textarea>
+                <span class="input-helper"></span>
                 <input class="new-review__btn" type="submit" value="Отправить">                                          
             </form>
         </div>    
@@ -145,7 +244,8 @@ class App {
         tagEl.classList.add('film-filter__link_active')
 
         this.renderFilmList()   
-        this.activeFilmId = null     
+        this.activeFilmId = null    
+        this.activeTrailerId = null 
     }
 
     selectTag(id){
@@ -184,8 +284,11 @@ class App {
             containerEl.innerHTML += `
             <div class="col-md-12 film-pre" data-id=${film.id}>
                 <div class="film-pre__background" style="background-image: url(${film.poster});">
+                    <video class="film-pre__video hidden" onloadstart="this.volume=0.2" src="${film.trailer}" preload="auto" poster="${film.poster}" loop>
                 </div>
                 <div class="film-pre__content">
+                    <i class="film-pre__play" title="Play trailer"></i>
+                    <i class="film-pre__pause hidden" title="Pause trailer"></i>
                     <h3 class="film-pre__title">${film.title}</h3>
                     <p class="film-pre__subtitle">
                     ${film.short_synopsis}

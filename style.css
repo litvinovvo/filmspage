@@ -176,13 +176,22 @@
 
 
 }
+.film-pre__video{
+    height: 106%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
 .film-pre__background{
     background-size: cover;
     background-position: center;
     filter: grayscale(100%);
     height: 100%;
     opacity: .8;
-    transition: all .15s ease-in-out;
+    transition: all .2s linear; 
+    overflow: hidden;
+    position: relative;
 }
 
 .film-pre__content{
@@ -195,7 +204,7 @@
     padding: 15px;
     background-color: rgba(255, 255, 255, .7);
     border-left: 5px solid #FA320A;
-    transition: all .15s ease-in-out; 
+    transition: all 2s linear; 
 }
 .film-pre__title{
 
@@ -213,6 +222,70 @@
 
 }
 
+.film-pre__play{
+
+    display: block;
+    position: relative;
+
+    width: 80px;
+    height: 80px;
+    border: 5px solid black;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    margin-left: 2px;   
+
+}
+
+.film-pre__play::before{
+    content: '';
+    display: block;
+    position: absolute;
+	width: 0;
+	height: 0;
+	border-top: 25px solid transparent;
+	border-left: 45px solid #131313;
+    border-bottom: 25px solid transparent;
+    top: 10px;
+    left: 17px;    
+}
+
+.film-pre__play:hover::before{
+    border-left-color: #FA320A;
+}
+.film-pre__pause{
+    display: block;
+    position: relative;
+
+    width: 80px;
+    height: 80px;
+    border: 5px solid black;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    margin-left: 2px;    
+}
+
+.film-pre__pause::before{
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 15px;
+    left: 40px;
+    height: 40px;
+    border-left: 6px solid black;
+}
+.film-pre__pause::after{
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 15px;
+    left: 23px;
+    height: 40px;
+    border-left: 6px solid black;
+}
+.film-pre__pause:hover::after,
+.film-pre__pause:hover::before{
+    border-left-color: #FA320A;
+}
 .film-pre_selected .film-pre__background{
     filter: grayscale(0);
     opacity: 1;    
@@ -229,8 +302,24 @@
     opacity: 1;
 }
 
+.film-pre_show-video .film-pre__background{
+    filter: grayscale(0);
+    opacity: 1;    
+}
+
 .film-pre:hover .film-pre__content{
     background-color: rgba(255, 255, 255, .95);
+}
+
+.film-pre__content_hidden{
+
+    opacity: 0;
+    transition: all .3s linear; 
+}
+
+.film-pre:hover .film-pre__content_hidden{
+    opacity: 1;
+
 }
 
 .new-review{
@@ -249,7 +338,7 @@
     padding: 5px 15px;
     border-radius: 5px;
     border: 2px solid #dedede;
-    margin-bottom: 15px;
+    margin-bottom: 0;
     font-size: 16px;
 }
 .new-review__textarea{
@@ -371,4 +460,93 @@
     .top-nav__item {
         margin-right: 30px;
     }
+}
+
+.new-review__rate{
+    color: #FFAF00;
+    margin-bottom: 10px;
+}
+.new-review__rate .star{
+    position: relative;
+    cursor: pointer;
+    font-size: 20px;
+}
+.new-review__rate input:checked ~ label::after{
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    font-weight: 900;
+    top: 0;
+    left: 0;
+}
+.new-review__rate input#rate1:checked ~ label[for=rate1]::after {
+    content: "\f005";
+}
+.new-review__rate input#rate2:checked ~ label[for=rate2]::after,
+.new-review__rate input#rate2:checked ~ label[for=rate1]::after {
+    content: "\f005";
+}
+.new-review__rate input#rate3:checked ~ label[for=rate3]::after,
+.new-review__rate input#rate3:checked ~ label[for=rate2]::after,
+.new-review__rate input#rate3:checked ~ label[for=rate1]::after {
+    content: "\f005";
+}
+.new-review__rate input#rate4:checked ~ label[for=rate4]::after,
+.new-review__rate input#rate4:checked ~ label[for=rate3]::after,
+.new-review__rate input#rate4:checked ~ label[for=rate2]::after,
+.new-review__rate input#rate4:checked ~ label[for=rate1]::after {
+    content: "\f005";
+}
+
+.new-review__rate input#rate5:checked ~ label[for=rate5]::after,
+.new-review__rate input#rate5:checked ~ label[for=rate4]::after,
+.new-review__rate input#rate5:checked ~ label[for=rate3]::after,
+.new-review__rate input#rate5:checked ~ label[for=rate2]::after,
+.new-review__rate input#rate5:checked ~ label[for=rate1]::after {
+    content: "\f005";
+}
+
+.review__rate{
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #FFAF00;
+}
+
+
+.input:required:focus{
+    outline: none;
+    box-shadow: inset 0 0 2px 1px rgba(250, 50, 10, 0.7);
+}
+
+.input:focus:valid{
+    outline: none;
+    box-shadow: inset 0 0 2px 1px rgba(97, 216, 19, 0.7);
+}
+
+.input:not(:required):focus + span::before{
+    color: rgb(77, 148, 49);
+    content: "можно не заполнять";
+    display: inline;
+    visibility: visible;
+}
+
+.input:required:focus + span::before{
+    color: #FA320A;
+    content: "обязательное поле";
+    display: inline;
+    visibility: visible;
+}
+
+.input-helper{
+    display: block;
+    width: 100%;
+    text-align: right;
+    color: gray;
+}
+
+.input-helper:before{
+    font-family: 'Roboto Condensed';
+    content: "подсказка для поля ввода";
+    display: inline;
+    visibility: hidden;
+
 }
