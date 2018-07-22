@@ -3,8 +3,9 @@ function insertAfter(elem, refElem) {
     return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
 }
 
-escapeForHTML = s => s.replace(/[&<]/g, c => c === '&' ? '&amp;' : '&lt;');
-
+function escapeForHTML(s){
+    return s.replace(/[&<]/g, c => c === '&' ? '&amp;' : '&lt;');
+}
 class Comment {
     constructor({author,text,film_id,title,rate}){
         this.author = escapeForHTML(author)
@@ -150,7 +151,14 @@ class App {
         function renderRate(rate){
             let rateStr = '';
             for(let r=1;r<6;r++){
-                rateStr+= rate < r ? `<i class="far fa-star"></i>` : `<i class="fas fa-star"></i>`
+                rateStr+= rate < r ? `
+                <svg class="review__star_outline"><use xlink:href="#icon-star-outline"></use></svg>
+                ` : `
+                <svg class="review__star"><use xlink:href="#icon-star"></use></svg> 
+                `
+
+ 
+
             }
             return rateStr
         }
@@ -195,23 +203,28 @@ class App {
                     <input class="hidden" type="radio" name="rate" id="rate5" value="5">
 
                     <label for="rate1" class="star">  
-                        <i class="far fa-star"></i>
+                        <svg class="new-review__star"><use xlink:href="#icon-star-outline"></use></svg>
+                        <svg class="new-review__star_selected"><use xlink:href="#icon-star"></use></svg>                        
                     </label>
 
                     <label for="rate2" class="star">  
-                        <i class="far fa-star"></i>
+                        <svg class="new-review__star"><use xlink:href="#icon-star-outline"></use></svg>
+                        <svg class="new-review__star_selected"><use xlink:href="#icon-star"></use></svg>                         
                     </label>
                     
                     <label for="rate3" class="star">  
-                        <i class="far fa-star"></i>
+                        <svg class="new-review__star"><use xlink:href="#icon-star-outline"></use></svg>
+                        <svg class="new-review__star_selected"><use xlink:href="#icon-star"></use></svg>                         
                     </label>
 
                     <label for="rate4" class="star">  
-                        <i class="far fa-star"></i>
+                        <svg class="new-review__star"><use xlink:href="#icon-star-outline"></use></svg>
+                        <svg class="new-review__star_selected"><use xlink:href="#icon-star"></use></svg>                         
                     </label>
                     
                     <label for="rate5" class="star">  
-                        <i class="far fa-star"></i>
+                        <svg class="new-review__star"><use xlink:href="#icon-star-outline"></use></svg>
+                        <svg class="new-review__star_selected"><use xlink:href="#icon-star"></use></svg>                         
                     </label>
                 </div>
 
@@ -220,9 +233,9 @@ class App {
                 <input required autocomplete="off" class="input new-review__input" type="text" name="name" id="name" placeholder="Иван Иванов" minlength="2">
                 <span class="input-helper"></span>
                 <label class=" new-review__label" for="title">Заголовок</label>
-                <input required autocomplete="off" class="input new-review__input" type="text" name="title" id="title" placeholder="Коротко о фильме" minlength="2">               <span class="input-helper"></span> 
+                <input required autocomplete="off" class="input new-review__input" type="text" name="title" id="title" placeholder="Отличный фильм" minlength="2">               <span class="input-helper"></span> 
                 <label class=" new-review__label" for="text">Текст</label>
-                <textarea autocomplete="off" class="input new-review__textarea" name="text" id="text" placeholder="Ваша рецензия" ></textarea>
+                <textarea autocomplete="off" class="input new-review__textarea" name="text" id="text" placeholder="Почему стоит сходить..." ></textarea>
                 <span class="input-helper"></span>
                 <input class="new-review__btn" type="submit" value="Отправить">                                          
             </form>
@@ -287,8 +300,12 @@ class App {
                     <video class="film-pre__video hidden" onloadstart="this.volume=0.2" src="${film.trailer}" preload="auto" poster="${film.poster}" loop>
                 </div>
                 <div class="film-pre__content">
-                    <i class="film-pre__play" title="Play trailer"></i>
-                    <i class="film-pre__pause hidden" title="Pause trailer"></i>
+                    <svg class="film-pre__play" title="Play trailer">
+                        <use xlink:href="#icon-play"></use>
+                    </svg>
+                    <svg class="film-pre__pause hidden" title="Pause trailer">
+                        <use xlink:href="#icon-pause"></use>
+                    </svg>                    
                     <h3 class="film-pre__title">${film.title}</h3>
                     <p class="film-pre__subtitle">
                     ${film.short_synopsis}

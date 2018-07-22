@@ -1,6 +1,8 @@
 .page{
     font-family: 'Roboto', sans-serif;
     background-color: whitesmoke;
+    background-image: url(svg/clapperboard.svg), url(svg/camera.svg);
+    background-position: 0 0,64px 64px;
 }
 .page__bg_white{
     background-color: white;
@@ -154,21 +156,24 @@
 }
 
 .top-search__btn{
-    font-size: 18px;
-    color: grey;
+    /* font-size: 18px; */
+    width: 18px;
+    height: 18px;
+    fill: grey;
     position: absolute;
     top: 6px;
     right: 26px;
+    transition: fill .2s;
 }
 
 .top-search__btn:hover{
-    color: black;
+    fill: black;
     cursor: pointer;
 }
 
 .top-search__btn:active,
 .top-search__btn:focus{
-    color: grey;
+    fill: grey;
 }
 
 .film-pre{
@@ -222,7 +227,29 @@
 
 }
 
-.film-pre__play{
+.film-pre__play,
+.film-pre__pause{
+    width: 80px;
+    height: 80px;
+    transition: fill .2s, filter .2s;
+    -webkit-filter: drop-shadow(8px 8px 8px #000);
+    filter: drop-shadow(5px 5px 5px rgba(0,0,0,.5)); 
+    fill: #000;
+}
+
+.film-pre__play:hover,
+.film-pre__pause:hover{
+    fill: #FA320A;  
+}
+
+.film-pre__play:active,
+.film-pre__pause:active{
+    fill: #FA320A; 
+    filter: none;
+    -webkit-filter: none;    
+}
+
+/* .film-pre__play{
 
     display: block;
     position: relative;
@@ -285,7 +312,7 @@
 .film-pre__pause:hover::after,
 .film-pre__pause:hover::before{
     border-left-color: #FA320A;
-}
+} */
 .film-pre_selected .film-pre__background{
     filter: grayscale(0);
     opacity: 1;    
@@ -466,43 +493,67 @@
     color: #FFAF00;
     margin-bottom: 10px;
 }
+.new-review__star{
+    fill: #FFAF00;
+    width: 30px;
+    height: 30px;
+}
+
+.review__star{
+    fill: #FFAF00;
+    width: 20px;
+    height: 20px;    
+}
+.review__star_outline{
+    fill: #FFAF00;
+    width: 18px;
+    height: 20px;    
+}
 .new-review__rate .star{
     position: relative;
     cursor: pointer;
-    font-size: 20px;
 }
-.new-review__rate input:checked ~ label::after{
-    font-family: "Font Awesome 5 Free";
+.new-review__star_selected{
+    opacity: 0;
+    fill: #FFAF00;
+    width: 30px;
+    height: 30px;
+    transition: opacity .3s;
+}
+.new-review__rate .star:hover .new-review__star_selected,
+.new-review__rate .star:hover .new-review__star{
+    fill: rgb(255, 206, 101);
+}
+.new-review__rate input:checked ~ label .new-review__star_selected{
     position: absolute;
-    font-weight: 900;
     top: 0;
     left: 0;
 }
-.new-review__rate input#rate1:checked ~ label[for=rate1]::after {
-    content: "\f005";
+.new-review__rate input#rate1:checked ~ label[for=rate1] .new-review__star_selected {
+    opacity: 1;
 }
-.new-review__rate input#rate2:checked ~ label[for=rate2]::after,
-.new-review__rate input#rate2:checked ~ label[for=rate1]::after {
-    content: "\f005";
+.new-review__rate input#rate2:checked ~ label[for=rate2] .new-review__star_selected,
+.new-review__rate input#rate2:checked ~ label[for=rate1] .new-review__star_selected {
+    opacity: 1;
 }
-.new-review__rate input#rate3:checked ~ label[for=rate3]::after,
-.new-review__rate input#rate3:checked ~ label[for=rate2]::after,
-.new-review__rate input#rate3:checked ~ label[for=rate1]::after {
-    content: "\f005";
+.new-review__rate input#rate3:checked ~ label[for=rate3] .new-review__star_selected,
+.new-review__rate input#rate3:checked ~ label[for=rate2] .new-review__star_selected,
+.new-review__rate input#rate3:checked ~ label[for=rate1] .new-review__star_selected {
+    opacity: 1;
 }
-.new-review__rate input#rate4:checked ~ label[for=rate4]::after,
-.new-review__rate input#rate4:checked ~ label[for=rate3]::after,
-.new-review__rate input#rate4:checked ~ label[for=rate2]::after,
-.new-review__rate input#rate4:checked ~ label[for=rate1]::after {
-    content: "\f005";
+.new-review__rate input#rate4:checked ~ label[for=rate4] .new-review__star_selected,
+.new-review__rate input#rate4:checked ~ label[for=rate3] .new-review__star_selected,
+.new-review__rate input#rate4:checked ~ label[for=rate2] .new-review__star_selected,
+.new-review__rate input#rate4:checked ~ label[for=rate1] .new-review__star_selected {
+    opacity: 1;
 }
 
-.new-review__rate input#rate5:checked ~ label[for=rate5]::after,
-.new-review__rate input#rate5:checked ~ label[for=rate4]::after,
-.new-review__rate input#rate5:checked ~ label[for=rate3]::after,
-.new-review__rate input#rate5:checked ~ label[for=rate2]::after,
-.new-review__rate input#rate5:checked ~ label[for=rate1]::after {
-    content: "\f005";
+.new-review__rate input#rate5:checked ~ label[for=rate5] .new-review__star_selected,
+.new-review__rate input#rate5:checked ~ label[for=rate4] .new-review__star_selected,
+.new-review__rate input#rate5:checked ~ label[for=rate3] .new-review__star_selected,
+.new-review__rate input#rate5:checked ~ label[for=rate2] .new-review__star_selected,
+.new-review__rate input#rate5:checked ~ label[for=rate1] .new-review__star_selected {
+    opacity: 1;
 }
 
 .review__rate{
@@ -514,16 +565,16 @@
 
 .input:required:focus{
     outline: none;
-    box-shadow: inset 0 0 2px 1px rgba(250, 50, 10, 0.7);
+    box-shadow: inset 0 0 2px 1px rgb(250, 18, 10);
 }
 
 .input:focus:valid{
     outline: none;
-    box-shadow: inset 0 0 2px 1px rgba(97, 216, 19, 0.7);
+    box-shadow: inset 0 0 2px 1px rgb(62, 159, 255);
 }
 
 .input:not(:required):focus + span::before{
-    color: rgb(77, 148, 49);
+    color: #343434;
     content: "можно не заполнять";
     display: inline;
     visibility: visible;
@@ -536,11 +587,15 @@
     visibility: visible;
 }
 
+.input:required:focus:valid + span::before{
+    color: #343434;
+}
+
 .input-helper{
     display: block;
     width: 100%;
     text-align: right;
-    color: gray;
+    color: #343434;
 }
 
 .input-helper:before{
@@ -549,4 +604,30 @@
     display: inline;
     visibility: hidden;
 
+}
+.footer__social{
+    padding: 0;
+    list-style-type: none;
+}
+
+.footer__social-item{
+    display: inline-block;
+    margin: 0 10px;
+}
+.footer__social-link{
+    display: block;
+}
+.footer__icon{
+    fill: white;
+    width: 32px;
+    height: 32px;
+    transition: fill .2s;
+}
+
+.footer__icon:hover{
+    fill: #FA320A;
+}
+.footer__icon:active,
+.footer__icon:focus{
+    fill: white; 
 }
